@@ -256,6 +256,8 @@ private:
 	void sendUseItemCooldown(uint32_t time);
 	void sendSupplyUsed(const uint16_t clientId);
 
+	void sendScreenshotEvent(ScreenshotEventType type);
+
 	// tiles
 	void sendMapDescription(const Position& pos);
 

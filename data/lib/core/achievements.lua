@@ -705,6 +705,7 @@ function Player.addAchievement(self, ach, hideMsg)
 		if not hideMsg then
 			self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Congratulations! You earned the achievement \"" .. achievement.name .. "\".")
 		end
+		self:screenshot(SCREENSHOTEVENT_ACHIEVEMENT)
 	end
 	return true
 end

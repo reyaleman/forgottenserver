@@ -770,6 +770,17 @@ public:
 		}
 	}
 
+	void sendScreenshotEvent(ScreenshotEventType type) const
+	{
+		if (type < SCREENSHOTEVENT_FIRST || type > SCREENSHOTEVENT_LAST) {
+			return;
+		}
+
+		if (client) {
+			client->sendScreenshotEvent(type);
+		}
+	}
+
 	// event methods
 	void onUpdateTileItem(const Tile* tile, const Position& pos, const Item* oldItem, const ItemType& oldType,
 	                      const Item* newItem, const ItemType& newType) override;

@@ -3584,6 +3584,14 @@ void ProtocolGame::sendSessionEnd(SessionEndTypes_t reason)
 	send(output);
 }
 
+void ProtocolGame::sendScreenshotEvent(ScreenshotEventType type)
+{
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(type);
+	writeToOutputBuffer(msg);
+}
+
 ////////////// Add common messages
 void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bool known, uint32_t remove)
 {

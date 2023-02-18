@@ -16,6 +16,7 @@ function onDeath(player, corpse, killer, mostDamageKiller, lastHitUnjustified, m
 	local killerName
 	if killer then
 		if killer:isPlayer() then
+			killer:screenshot(SCREENSHOTEVENT_PLAYERKILL)
 			byPlayer = 1
 		else
 			local master = killer:getMaster()

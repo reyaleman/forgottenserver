@@ -2072,6 +2072,19 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(DECAYING_TRUE);
 	registerEnum(DECAYING_PENDING);
 
+	registerEnum(SCREENSHOTEVENT_ACHIEVEMENT);
+	registerEnum(SCREENSHOTEVENT_BESTIARYENTRYCOMPLETED);
+	registerEnum(SCREENSHOTEVENT_BESTIARYENTRYUNLOCKED);
+	registerEnum(SCREENSHOTEVENT_BOSSDEFEATED);
+	registerEnum(SCREENSHOTEVENT_DEATHPVE);
+	registerEnum(SCREENSHOTEVENT_DEATHPVP);
+	registerEnum(SCREENSHOTEVENT_LEVELUP);
+	registerEnum(SCREENSHOTEVENT_PLAYERKILLASSIST);
+	registerEnum(SCREENSHOTEVENT_PLAYERKILL);
+	registerEnum(SCREENSHOTEVENT_PLAYERATTACKING);
+	registerEnum(SCREENSHOTEVENT_TREASUREFOUND);
+	registerEnum(SCREENSHOTEVENT_SKILLUP);
+
 	// _G
 	registerGlobalVariable("INDEX_WHEREEVER", INDEX_WHEREEVER);
 	registerGlobalBoolean("VIRTUAL_PARENT", true);
@@ -2702,6 +2715,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "isNearDepotBox", LuaScriptInterface::luaPlayerIsNearDepotBox);
 
 	registerMethod("Player", "getIdleTime", LuaScriptInterface::luaPlayerGetIdleTime);
+
+	registerMethod("Player", "screenshot", LuaScriptInterface::luaPlayerScreenshot);
 
 	// Monster
 	registerClass("Monster", "Creature", LuaScriptInterface::luaMonsterCreate);
@@ -10844,6 +10859,20 @@ int LuaScriptInterface::luaPlayerGetIdleTime(lua_State* L)
 	}
 
 	lua_pushnumber(L, player->getIdleTime());
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerScreenshot(lua_State* L)
+{
+	// player:screenshot(screenshotType)
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		ScreenshotEventType screenshotType = getNumber<ScreenshotEventType>(L, 2);
+		player->sendScreenshotEvent(screenshotType);
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
 	return 1;
 }
 

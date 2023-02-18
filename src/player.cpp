@@ -497,6 +497,7 @@ void Player::addSkillAdvance(skills_t skill, uint64_t count)
 		skills[skill].tries = 0;
 		skills[skill].percent = 0;
 
+		sendScreenshotEvent(SCREENSHOTEVENT_SKILLUP);
 		sendTextMessage(MESSAGE_EVENT_ADVANCE,
 		                fmt::format("You advanced to {:s} level {:d}.", getSkillName(skill), skills[skill].level));
 
@@ -1712,6 +1713,7 @@ void Player::addManaSpent(uint64_t amount)
 		magLevel++;
 		manaSpent = 0;
 
+		sendScreenshotEvent(SCREENSHOTEVENT_SKILLUP);
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, fmt::format("You advanced to magic level {:d}.", magLevel));
 
 		g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, magLevel - 1, magLevel);
@@ -1860,6 +1862,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText /* = fa
 
 		g_creatureEvents->playerAdvance(this, SKILL_LEVEL, prevLevel, level);
 
+		sendScreenshotEvent(SCREENSHOTEVENT_LEVELUP);
 		sendTextMessage(MESSAGE_EVENT_ADVANCE,
 		                fmt::format("You advanced from Level {:d} to Level {:d}.", prevLevel, level));
 	}
@@ -4068,6 +4071,7 @@ void Player::addAttacked(const Player* attacked)
 		return;
 	}
 
+	attacked->sendScreenshotEvent(SCREENSHOTEVENT_PLAYERATTACKING);
 	attackedSet.insert(attacked->guid);
 }
 
@@ -4578,6 +4582,7 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 		manaSpent += tries;
 
 		if (magLevel != currMagLevel) {
+			sendScreenshotEvent(SCREENSHOTEVENT_SKILLUP);
 			sendTextMessage(MESSAGE_EVENT_ADVANCE, fmt::format("You advanced to magic level {:d}.", magLevel));
 		}
 
@@ -4631,6 +4636,7 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 		skills[skill].tries += tries;
 
 		if (currSkillLevel != skills[skill].level) {
+			sendScreenshotEvent(SCREENSHOTEVENT_SKILLUP);
 			sendTextMessage(MESSAGE_EVENT_ADVANCE,
 			                fmt::format("You advanced to {:s} level {:d}.", getSkillName(skill), skills[skill].level));
 		}

@@ -35,6 +35,8 @@ function onDeath(player, corpse, killer, mostDamageKiller, lastHitUnjustified, m
 		end
 	end
 
+	player:screenshot(isPlayer and SCREENSHOTEVENT_DEATHPVP or SCREENSHOTEVENT_DEATHPVE)
+
 	if not player:getSlotItem(CONST_SLOT_BACKPACK) then
 		player:addItem(ITEM_BAG, 1, false, CONST_SLOT_BACKPACK)
 	end
